@@ -19,5 +19,6 @@ public final class DogHomeUtils extends JavaPlugin {
     public void onEnable() {
         getLogger().info("狗窝服务工具已加载!");
         CommandManager.INSTANCE.registerCommand(defaultCommand.INSTANCE,false);
+        getLogger().info("开始连接数据库");
     }
 }
