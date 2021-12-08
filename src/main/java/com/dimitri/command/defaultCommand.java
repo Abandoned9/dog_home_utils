@@ -1,7 +1,10 @@
 package com.dimitri.command;
 
 import com.dimitri.DogHomeUtils;
+import com.dimitri.entity.User;
+import com.dimitri.mapper.UserMapper;
 import com.dimitri.service.DogLogService;
+import com.dimitri.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.mamoe.mirai.console.command.CommandSenderOnMessage;
 import net.mamoe.mirai.console.command.java.JCompositeCommand;
@@ -17,6 +20,7 @@ public class defaultCommand extends JCompositeCommand {
     public static final defaultCommand INSTANCE = new defaultCommand();
     public static final ObjectMapper objectMapper = new ObjectMapper();
     public static long callBack = 30000L;
+    private UserService userService;
 
     public defaultCommand() {
         super(DogHomeUtils.INSTANCE,"dhu",new String[]{"狗窝服务工具"},DogHomeUtils.INSTANCE.getParentPermission());
@@ -49,5 +53,12 @@ public class defaultCommand extends JCompositeCommand {
                 .append(dogLogService.randomGetOneDogLog())
                 .build();
         sender.sendMessage(chain);
+    }
+
+    @SubCommand("打工")
+    @Description("随机打工赚狗窝币")
+    public void doWork(CommandSenderOnMessage sender){
+        System.out.println(Objects.requireNonNull(sender.getUser()).getId());
+        sender.sendMessage(userService.doWork((int) Objects.requireNonNull(sender.getUser()).getId(),sender));
     }
 }
